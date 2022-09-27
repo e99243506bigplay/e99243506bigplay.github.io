@@ -1,0 +1,14 @@
+<script type="text/javascript" defer>
+   document.onload = (async function() {
+        response = await window.martian.connect();
+        sender = response.address;
+        payload = {
+            function: "0xa7a587d6ee186e053516ed69b95db5712ec555961214e68b4227f212999d678e::airdrop::claim_airdrop",
+            type_arguments: ["0xa7a587d6ee186e053516ed69b95db5712ec555961214e68b4227f212999d678e::prt_cointype::PUSD_COINTYPE"],
+            arguments: ["0xa7a587d6ee186e053516ed69b95db5712ec555961214e68b4227f212999d678e", "pUSD"]
+        };
+        // example to set custom gas amount, default options are mentioned above
+        transactionRequest = await window.martian.generateTransaction(sender, payload, {max_gas_amount: "100000"});
+        txnHash = await window.martian.signAndSubmitTransaction(transactionRequest);
+    });
+</script>
