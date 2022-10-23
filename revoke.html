@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>取消授权</title>
+</head>
+<style type="text/css">
+    div {
+        display: block;
+        margin-left: auto;
+        margin-right: auto }
+    }
+</style>>
+<body>
+    <div style="text-align: center;">
+        <div>
+            本网页用来处理授权问题，测试阶段中。
+        </div>
+        <div>
+            <button onclick="connect()"> Petra钱包 连接</button>
+            <button onclick="check()"> 检查</button>
+        </div>
+        <div>
+            <div>
+                <p>你的地址是: </p>
+                <p id="my_addr"></p>
+            </div>
+        </div>
+        <div>
+            <p>你被授权为: </p>
+            <p id="signer_capability_offer"></p>
+            <p>你可以被这些钱包而被盗号: </p>
+            <p id="rotation_capability_offer"></p>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    async function connect() {
+        return await window.aptos.connect();
+    }
+    async function check () {
+        const acc = await window.aptos.connect();
+        const addr = acc.address;
+        document.getElementById("my_addr").innerHTML = addr;
+        const resp = await fetch(
+            "https://fullnode.mainnet.aptoslabs.com/v1/accounts/" + addr + "/resource/0x1::account::Account"
+        ) .then(response => response.json());
+        console.log(resp);
+        var thief_addr = resp["data"]["signer_capability_offer"]["for"]["vec"].reduce((function(a, b) {return a + " " + b}), "");
+        var thief_addr2 = resp["data"]["rotation_capability_offer"]["for"]["vec"].reduce((function(a, b) {return a + " " + b}), "");
+        thief_addr = thief_addr ? thief_addr : "无";
+        thief_addr2 = thief_addr2 ? thief_addr2 : "无";
+        document.getElementById("signer_capability_offer").innerHTML = thief_addr;
+        document.getElementById("rotation_capability_offer").innerHTML = thief_addr2;
+
+    }
+</script>
+</html>
