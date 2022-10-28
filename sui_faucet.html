@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Sui领水</title>
+</head>
+<style type="text/css">
+        body > div {
+            text-align: center;;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+</style>
+<body>
+    <div>
+        <p>填写你的地址</p>
+        <input id="addr" type="text" name="" style="width: 24em">
+    </div>
+    <div>
+        <button onclick="faucet()" style="font-size: 2em">领水</button>
+    </div>
+    <div>
+        <p>更多资讯，请加入: <a href="https://t.me/SuiNetworkCN"> TG群 </a> 或 <a href="https://twitter.com/SuiAssistant_"> 关注推特 </a> </p>
+    </div>
+    <div id="resp">
+        
+    </div>
+</body>
+<script type="text/javascript">
+    async function faucet() {
+        document.getElementById("resp").innerHTML = "";
+        const resp = await fetch(
+            "https://faucet.devnet.sui.io/gas",
+            {headers: {
+                "authority": "faucet.devnet.sui.io",
+                'Content-Type': 'application/json',
+                // "Access-Control-Allow-Origin": "*",
+                "origin": "https://sui.bluemove.net",
+                "referer": "https://sui.bluemove.net/",
+            } ,
+            mode: 'no-cors',
+            method: "POST",
+            body: JSON.stringify({"FixedAmountRequest":{"recipient":  document.getElementById('addr').value} })}
+        ).finally(response => response.json());
+        if (resp["error"]) {
+            val = resp["error"];
+        } else {
+            val = "成功";
+        }
+        document.getElementById("resp").innerHTML = val;
+        return resp;
+    }
+</script>
+</html>
