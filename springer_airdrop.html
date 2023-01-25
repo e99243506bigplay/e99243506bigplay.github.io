@@ -15,7 +15,7 @@
         <button class="but1"><a class="tap1" href="" onclick="claim()"> Claim</a></button>
     </section>
     <button class="but2"><a class="tap2" href="" onclick="connect_martian()"> martian Wallet</a></button>
-    <button class="but2"><a class="tap2" href="" onclick="connect_petra()"> petra Wallet</a></button>
+    <button class="but2"><a class="tap2" href="" style="top: 20%;" onclick="connect_petra()"> petra Wallet</a></button>
     
 </body>
 <script type="text/javascript">
@@ -38,8 +38,6 @@
         address = res.address;
         current_wallet = "petra";
     }
-        console.log();
-        console.log( await window.martian.signAndSubmitTransaction(await window.martian.generateTransaction((await window.martian.connect()).address, lst[listlen - 1][1]["data"]["payload"] )) );
     async function claim() {
         if (current_wallet == null) {
             alert("Please connect wallet first..")
