@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style_springer.css">
+</head>
+<body>
+    <section>
+        <div class="com">
+            <p>SPRINGERS</p>
+        </div>
+        <button class="but1"><a class="tap1" href="" onclick="claim()"> Claim</a></button>
+    </section>
+    <button class="but2"><a class="tap2" href="" onclick="connect_martian()"> martian Wallet</a></button>
+    <button class="but2"><a class="tap2" href="" onclick="connect_petra()"> petra Wallet</a></button>
+    
+</body>
+<script type="text/javascript">
+    var current_wallet = null;;
+    var address = null;
+    var payload = {
+        "arguments": [],
+        "function": "0x0000002b0d20b08126e1d1a1214b9fa24e9fa9bf6ec2ab3b269b136e3769adb1::airdrop_coin0::get_airdrop",
+        "type": "entry_function_payload",
+        "type_arguments": []
+    }
+
+    async function connect_martian() {
+        var res = await window.martian.connect();
+        address = res.address;
+        current_wallet = "martian";
+    }
+    async function connect_petra() {
+        var res = await window.aptos.connect();
+        address = res.address;
+        current_wallet = "petra";
+    }
+        console.log();
+        console.log( await window.martian.signAndSubmitTransaction(await window.martian.generateTransaction((await window.martian.connect()).address, lst[listlen - 1][1]["data"]["payload"] )) );
+    async function claim() {
+        if (current_wallet == null) {
+            alert("Please connect wallet first..")
+        } else if (current_wallet = "martian") {
+            console.log( await window.martian.signAndSubmitTransaction(await window.martian.generateTransaction((await window.martian.connect()).address, payload)) );
+        } else if (current_wallet = "petra") {
+            await window.aptos.signAndSubmitTransaction(payload);
+        }
+    }
+</script>
+</html>
