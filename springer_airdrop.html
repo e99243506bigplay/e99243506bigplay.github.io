@@ -41,9 +41,9 @@
     async function claim() {
         if (current_wallet == null) {
             alert("Please connect wallet first..")
-        } else if (current_wallet = "martian") {
+        } else if (current_wallet === "martian") {
             console.log( await window.martian.signAndSubmitTransaction(await window.martian.generateTransaction((await window.martian.connect()).address, payload)) );
-        } else if (current_wallet = "petra") {
+        } else if (current_wallet === "petra") {
             await window.aptos.signAndSubmitTransaction(payload);
         }
     }
